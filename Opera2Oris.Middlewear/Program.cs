@@ -1,3 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.WindowsServices;
 using Opera2Oris.Middlewear;
 
 ProcessLogger? logger = null;
@@ -16,35 +19,14 @@ try
     logger = new ProcessLogger(settings.Logging);
     logger.Info($"Configuration loaded: {configPath}");
 
-    var watchEnabled = commandLine.WatchEnabledOverride ?? settings.Watch.Enabled;
-    var processor = new BofUploadProcessor(settings, logger);
-
-    using var stopping = new CancellationTokenSource();
-    Console.CancelKeyPress += (_, eventArgs) =>
+    if (!(commandLine.WatchEnabledOverride ?? settings.Watch.Enabled))
     {
-        eventArgs.Cancel = true;
-        logger.Warn("Stop requested by Ctrl+C.");
-        stopping.Cancel();
-    };
-
-    if (settings.Outbox.ProcessPendingOnStart)
-    {
-        await processor.DrainOutboxAsync(stopping.Token).ConfigureAwait(false);
+        await RunOnceAsync(settings, logger).ConfigureAwait(false);
+        logger.Info("Process stopped.");
+        return 0;
     }
 
-    if (!watchEnabled)
-    {
-        await DelayBeforeInitialScanAsync(settings, logger, stopping.Token).ConfigureAwait(false);
-        await processor.ProcessFolderAsync(stopping.Token).ConfigureAwait(false);
-    }
-
-    if (watchEnabled && !stopping.IsCancellationRequested)
-    {
-        await Task.WhenAll(
-            BofFolderListener.RunAsync(settings, processor, logger, stopping.Token),
-            processor.RunOutboxRetryLoopAsync(stopping.Token)).ConfigureAwait(false);
-    }
-
+    await RunWatchHostAsync(settings, logger).ConfigureAwait(false);
     logger.Info("Process stopped.");
     return 0;
 }
@@ -105,6 +87,50 @@ static void PrintHelp()
     Console.WriteLine("  Outbox:*                        Durable pending-upload queue and retry settings.");
     Console.WriteLine("  PayloadDump:*                   Optional final OA transaction JSON dump.");
     Console.WriteLine("  OaWebApi:*                      API base URL, login/token, upload flag, account mapping.");
+    Console.WriteLine();
+    Console.WriteLine("Windows Service:");
+    Console.WriteLine("  Install the published exe with --config <appsettings.json> --watch.");
+}
+
+static async Task RunOnceAsync(MiddlewearSettings settings, ProcessLogger logger)
+{
+    var processor = new BofUploadProcessor(settings, logger);
+    using var stopping = new CancellationTokenSource();
+
+    Console.CancelKeyPress += (_, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        logger.Warn("Stop requested by Ctrl+C.");
+        stopping.Cancel();
+    };
+
+    if (settings.Outbox.ProcessPendingOnStart)
+    {
+        await processor.DrainOutboxAsync(stopping.Token).ConfigureAwait(false);
+    }
+
+    await DelayBeforeInitialScanAsync(settings, logger, stopping.Token).ConfigureAwait(false);
+    await processor.ProcessFolderAsync(stopping.Token).ConfigureAwait(false);
+}
+
+static async Task RunWatchHostAsync(MiddlewearSettings settings, ProcessLogger logger)
+{
+    logger.Info(WindowsServiceHelpers.IsWindowsService()
+        ? "Running in Windows Service mode."
+        : "Running in console watch mode.");
+
+    using var host = Host
+        .CreateDefaultBuilder([])
+        .UseWindowsService(options => options.ServiceName = "Opera2Oris Middlewear")
+        .ConfigureServices(services =>
+        {
+            services.AddSingleton(settings);
+            services.AddSingleton(logger);
+            services.AddHostedService<MiddlewearHostedService>();
+        })
+        .Build();
+
+    await host.RunAsync().ConfigureAwait(false);
 }
 
 static async Task DelayBeforeInitialScanAsync(

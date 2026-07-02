@@ -928,7 +928,54 @@ dotnet run --project .\Opera2Oris.Middlewear\Opera2Oris.Middlewear.csproj
 dotnet run --project .\Opera2Oris.Middlewear\Opera2Oris.Middlewear.csproj -- --config "C:\Config\appsettings.json"
 ```
 
-## 12. Production რეკომენდაციები
+## 12. Windows Service რეჟიმი
+
+`Opera2Oris.Middlewear` შეიძლება გაეშვას როგორც Windows Service. Service რეჟიმში გამოიყენება იგივე watch worker, მაგრამ stop/start უკვე Windows Service Control Manager-ით კონტროლდება.
+
+Publish example:
+
+```powershell
+dotnet publish .\Opera2Oris.Middlewear\Opera2Oris.Middlewear.csproj -c Release -r win-x64 --self-contained false -o C:\Services\Opera2Oris
+```
+
+`appsettings.json` და `Headers.txt` უნდა იყოს publish/service folder-ში:
+
+```text
+C:\Services\Opera2Oris\
+  Opera2Oris.Middlewear.exe
+  appsettings.json
+  Headers.txt
+```
+
+Service install PowerShell-იდან, Administrator-ით:
+
+```powershell
+New-Service `
+  -Name "Opera2OrisMiddlewear" `
+  -DisplayName "Opera2Oris Middlewear" `
+  -BinaryPathName '"C:\Services\Opera2Oris\Opera2Oris.Middlewear.exe" --config "C:\Services\Opera2Oris\appsettings.json" --watch' `
+  -StartupType Automatic
+```
+
+Start/stop/remove:
+
+```powershell
+Start-Service Opera2OrisMiddlewear
+Stop-Service Opera2OrisMiddlewear
+sc.exe delete Opera2OrisMiddlewear
+```
+
+Service account-ს უნდა ჰქონდეს read/write permissions:
+
+- `BofExport.SourceDirectory`
+- `Archive.Directory`
+- `Logging.Directory`
+- `Outbox.Directory`
+- `PayloadDump.Directory`, თუ ჩართულია
+
+თუ `SourceDirectory` არის user-specific OneDrive path, Windows Service account-მა შეიძლება ეს path ვერ დაინახოს. Production-ში უკეთესია გამოიყენოთ server/local folder ან network share, სადაც service account-ს explicit permission აქვს.
+
+## 13. Production რეკომენდაციები
 
 1. `Outbox.Enabled` უნდა იყოს `true`.
 2. `UploadEnabled` ჩართეთ მხოლოდ მას შემდეგ, რაც account mapping სრულად შევსებულია.

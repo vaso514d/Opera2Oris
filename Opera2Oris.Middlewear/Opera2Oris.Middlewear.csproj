@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.0.0" />
     <ProjectReference Include="..\Opera2Oris.Domain\Opera2Oris.Domain.csproj" />
     <ProjectReference Include="..\Opera2Oris.ApiClient\Opera2Oris.ApiClient.csproj" />
   </ItemGroup>
