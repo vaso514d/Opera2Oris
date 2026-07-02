@@ -442,19 +442,8 @@ public sealed class BofToOaTransactionConverter
     private static string? BuildTransactionComment(BofExportRecord record) =>
         FirstValue(record.TransactionDescription, record.Remark, record.Reference);
 
-    private static string? BuildEntryComment(BofExportRecord record)
-    {
-        var transactionComment = BuildTransactionComment(record);
-        var debtorName = FirstValue(record.PayeeName, record.GuestName);
-
-        return (debtorName, transactionComment) switch
-        {
-            ({ Length: > 0 }, { Length: > 0 }) => $"{debtorName} - {transactionComment}",
-            ({ Length: > 0 }, _) => debtorName,
-            (_, { Length: > 0 }) => transactionComment,
-            _ => null
-        };
-    }
+    private static string? BuildEntryComment(BofExportRecord record) =>
+        BuildTransactionComment(record);
 
     private static string? FirstValue(params string?[] values) =>
         values.FirstOrDefault(value => !string.IsNullOrWhiteSpace(value))?.Trim();

@@ -460,8 +460,8 @@ Payment account აირჩევა ამ პრიორიტეტით:
 | `trx_subgroup` ordinal `59` | revenue account lookup fallback | Charge/Package | თუ `trx_code` mapping არ არის, revenue account შეიძლება subgroup-ით შეირჩეს |
 | `payment_method` ordinal `92` | payment account lookup fallback | Payment | payment method უკავშირებს payment-ს cash/bank/card account-ს |
 | account fields `19`, `23`, `42`, `45`, `48`, `51`, `54` | `transactionEntries[].account` | თუ შევსებულია | CSV account numbers გამოიყენება appsettings fallback account-ებამდე |
-| `payee_name` ordinal `20` | `transactionEntries[].comment` | თუ შევსებულია | debtor/payee name ჩანს entry comment-ში |
-| `guest_name` ordinal `24` | `transactionEntries[].comment` fallback | თუ `payee_name` ცარიელია | guest name გამოიყენება debtor/payee name fallback-ად |
+| `payee_name` ordinal `20` | არ იგზავნება comment-ში | information only | payer/debtor name აღარ ერწყმის OA comment-ს |
+| `guest_name` ordinal `24` | არ იგზავნება comment-ში | information only | guest name აღარ ერწყმის OA comment-ს |
 | `name_type` ordinal `21` | არ იგზავნება comment-ში | information only | sample value `D` არის name type, არა first name |
 | `description` ordinal `6` | `transactionComment` და `transactionEntries[].comment` | თუ შევსებულია | OA header comment მოდის parent row-იდან; entry comment მოდის იმ row-იდან, საიდანაც entry amount/account მოდის, მაგალითად VAT entry-ზე `VAT` |
 | `remark` ordinal `83` | `transactionComment` და `transactionEntries[].comment` fallback | თუ `description` ცარიელია | CSV-ის remark text ჩანს OA transaction-ში |
@@ -478,11 +478,6 @@ Payment account აირჩევა ამ პრიორიტეტით:
 
 `transactionComment` აღარ იქმნება audit/context ტექსტის გაერთიანებით. comment-ში არ ემატება source file, line, category, room ან transaction code.
 
-Debtor/payee name აირჩევა CSV ველებიდან ამ პრიორიტეტით:
-
-1. `payee_name` ordinal `20`
-2. `guest_name` ordinal `24`
-
 Comment text აირჩევა CSV ველებიდან ამ პრიორიტეტით:
 
 1. `description` ordinal `6`
@@ -498,10 +493,10 @@ transactionComment = {description || remark || reference}
 entry comment ფორმატია:
 
 ```text
-transactionEntries[].comment = {payee_name || guest_name from entry row} - {description || remark || reference from entry row}
+transactionEntries[].comment = {description || remark || reference from entry row}
 ```
 
-თუ debtor/payee name ცარიელია, entry comment-ში დარჩება მხოლოდ entry row-ის comment text. თუ comment text ცარიელია, header comment ცარიელი იქნება და entry comment-ში დარჩება მხოლოდ debtor/payee name. Header-ზე და entry-ზე ერთი და იგივე value აღარ იწერება: header ინახავს parent description-ს, entry ინახავს თავისი row-ის debtor name + description-ს.
+Payer/guest name comment-ში აღარ ემატება. თუ comment text ცარიელია, header comment და entry comment ცარიელი დარჩება.
 
 Audit ინფორმაცია source CSV-ზე და line-ზე ინახება outbox/source metadata-ში. Payload dump file name-ში ინახება source CSV-ის სახელი და `transactionComment`, მაგრამ source line Oris comment-ში აღარ იგზავნება.
 
