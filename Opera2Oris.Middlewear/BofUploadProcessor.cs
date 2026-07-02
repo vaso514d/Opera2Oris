@@ -52,7 +52,7 @@ internal sealed class BofUploadProcessor
             var batch = await _worker.ReadAsync(_settings.BofExport.ToImportOptions(searchPattern), cancellationToken).ConfigureAwait(false);
             PrintBatchSummary(batch);
 
-            var conversion = _converter.Convert(batch, _settings.OaWebApi.Mapping.ToOptions());
+            var conversion = _converter.Convert(batch, _settings.OaWebApi.ToMappingOptions());
             _logger.Info($"OA payloads created: {conversion.Transactions.Count}");
             PrintWarnings("Conversion warnings", conversion.Warnings);
             await DumpPayloadsAsync(conversion, cancellationToken).ConfigureAwait(false);

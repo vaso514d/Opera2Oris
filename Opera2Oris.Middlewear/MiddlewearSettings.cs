@@ -176,6 +176,8 @@ internal sealed class OaWebApiSettings
     public OaLoginSettings Login { get; set; } = new();
 
     public OaMappingSettings Mapping { get; set; } = new();
+
+    public BofToOaMappingOptions ToMappingOptions() => Mapping.ToOptions();
 }
 
 internal sealed class OaLoginSettings

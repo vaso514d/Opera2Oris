@@ -59,15 +59,21 @@ internal sealed class OaTransactionPayloadDumper
         var sourceName = string.IsNullOrWhiteSpace(transaction.SourceFilePath)
             ? "transaction"
             : Path.GetFileName(transaction.SourceFilePath);
-        var sourceLine = transaction.SourceLineNumber is null
-            ? $"item{index:000000}"
-            : $"line{transaction.SourceLineNumber.Value:000000}";
+
+        var transactionComment = string.IsNullOrWhiteSpace(transaction.TransactionComment)
+            ? "no-description"
+            : transaction.TransactionComment;
         var documentNumber = string.IsNullOrWhiteSpace(transaction.TransactionDocumentNumber)
-            ? "no-document"
+            ? BuildItemName(transaction, index)
             : transaction.TransactionDocumentNumber;
 
-        return $"{SanitizeFileName(sourceName)}_{sourceLine}_{SanitizeFileName(documentNumber)}.json";
+        return $"{SanitizeFileName(sourceName)}_{SanitizeFileName(transactionComment)}_{SanitizeFileName(documentNumber)}.json";
     }
+
+    private static string BuildItemName(OaTransactionRequest transaction, int index) =>
+        transaction.SourceLineNumber is null
+            ? $"item{index:000000}"
+            : $"line{transaction.SourceLineNumber.Value:000000}";
 
     private static string SanitizeFileName(string value)
     {

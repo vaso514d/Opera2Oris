@@ -55,9 +55,8 @@ public sealed class BofToOaTransactionConverter
 
         var absoluteAmount = Math.Abs(amount.Value);
         var currency = FirstValue(record.Currency, options.DefaultCurrency);
-        var comment = BuildComment(record);
-        var debitAmount = amount > 0 ? absoluteAmount : 0m;
-        var creditAmount = amount < 0 ? absoluteAmount : 0m;
+        var transactionComment = BuildTransactionComment(record);
+        var entryComment = BuildEntryComment(record, transactionComment);
 
         return new OaTransactionRequest
         {
@@ -66,18 +65,18 @@ public sealed class BofToOaTransactionConverter
             SourceLineNumber = record.SourceLineNumber,
             TransactionDate = ResolveTransactionDateTime(record, options),
             TransactionDocumentNumber = BuildDocumentNumber(record, options),
-            TransactionComment = comment,
+            TransactionComment = transactionComment,
             CorrectDisbalance = options.CorrectDisbalance,
             TransactionEntries =
             [
                 CreateEntry(
                     mainEntry: true,
                     account: account,
-                    debitAmount: debitAmount,
-                    creditAmount: creditAmount,
+                    debitAmount: absoluteAmount,
+                    creditAmount: absoluteAmount,
                     currency: currency,
                     options: options,
-                    comment: comment)
+                    comment: entryComment)
             ]
         };
     }
@@ -171,16 +170,18 @@ public sealed class BofToOaTransactionConverter
         return string.Concat(options.DocumentNumberPrefix, record.TransactionNumber.Value.ToString(CultureInfo.InvariantCulture));
     }
 
-    private static string? BuildComment(BofExportRecord record)
+    private static string? BuildTransactionComment(BofExportRecord record) =>
+        FirstValue(record.TransactionDescription, record.Remark, record.Reference);
+
+    private static string? BuildEntryComment(BofExportRecord record, string? transactionComment)
     {
         var debtorName = FirstValue(record.PayeeName, record.GuestName);
-        var csvComment = FirstValue(record.TransactionDescription, record.Remark, record.Reference);
 
-        return (debtorName, csvComment) switch
+        return (debtorName, transactionComment) switch
         {
-            ({ Length: > 0 }, { Length: > 0 }) => $"{debtorName} - {csvComment}",
+            ({ Length: > 0 }, { Length: > 0 }) => $"{debtorName} - {transactionComment}",
             ({ Length: > 0 }, _) => debtorName,
-            (_, { Length: > 0 }) => csvComment,
+            (_, { Length: > 0 }) => transactionComment,
             _ => null
         };
     }
