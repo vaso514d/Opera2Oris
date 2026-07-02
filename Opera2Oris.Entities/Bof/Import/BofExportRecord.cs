@@ -84,6 +84,16 @@ public sealed class BofExportRecord
 
     public string? Room => GetString(33);
 
+    public string? TravelAgentAccountNumber => GetString(42);
+
+    public string? CompanyAccountNumber => GetString(45);
+
+    public string? SourceAccountNumber => GetString(48);
+
+    public string? GroupAccountNumber => GetString(51);
+
+    public string? XGuestAccountNumber => GetString(54);
+
     public string? TransactionMainGroup => GetString(58);
 
     public string? TransactionSubGroup => GetString(59);

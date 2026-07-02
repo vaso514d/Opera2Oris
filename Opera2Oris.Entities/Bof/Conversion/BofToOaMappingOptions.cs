@@ -8,6 +8,8 @@ public sealed class BofToOaMappingOptions
 
     public string? DefaultRevenueAccount { get; init; }
 
+    public string? DefaultVatAccount { get; init; }
+
     public string? DefaultPaymentAccount { get; init; }
 
     public string? DefaultCurrency { get; init; } = "GEL";

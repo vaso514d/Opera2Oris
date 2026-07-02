@@ -228,6 +228,8 @@ internal sealed class OaMappingSettings
 
     public string? DefaultRevenueAccount { get; set; }
 
+    public string? DefaultVatAccount { get; set; }
+
     public string? DefaultPaymentAccount { get; set; }
 
     public string? DefaultCurrency { get; set; } = "GEL";
@@ -258,6 +260,7 @@ internal sealed class OaMappingSettings
             GuestLedgerAccount = EmptyToNull(GuestLedgerAccount),
             PackageLedgerAccount = EmptyToNull(PackageLedgerAccount),
             DefaultRevenueAccount = EmptyToNull(DefaultRevenueAccount),
+            DefaultVatAccount = EmptyToNull(DefaultVatAccount),
             DefaultPaymentAccount = EmptyToNull(DefaultPaymentAccount),
             DefaultCurrency = EmptyToNull(DefaultCurrency),
             DefaultCostCentre = EmptyToNull(DefaultCostCentre),
