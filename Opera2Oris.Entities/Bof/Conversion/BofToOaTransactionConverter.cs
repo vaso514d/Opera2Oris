@@ -17,13 +17,14 @@ public sealed class BofToOaTransactionConverter
         ArgumentNullException.ThrowIfNull(options);
 
         var recordList = records.ToArray();
-        var vatAccountsByParentTransactionNumber = CreateVatAccountsByParentTransactionNumber(recordList);
+        var relatedSalesRecordsByParentTransactionNumber = CreateRelatedSalesRecordsByParentTransactionNumber(recordList);
+        var duplicatePaymentRecords = CreateDuplicatePaymentRecords(recordList);
         var transactions = new List<OaTransactionRequest>();
         var warnings = new List<BofImportWarning>();
 
         foreach (var record in recordList)
         {
-            var transaction = ConvertRecord(record, options, vatAccountsByParentTransactionNumber, token, warnings);
+            var transaction = ConvertRecord(record, options, relatedSalesRecordsByParentTransactionNumber, duplicatePaymentRecords, token, warnings);
             if (transaction is not null)
             {
                 transactions.Add(transaction);
@@ -36,11 +37,17 @@ public sealed class BofToOaTransactionConverter
     private static OaTransactionRequest? ConvertRecord(
         BofExportRecord record,
         BofToOaMappingOptions options,
-        IReadOnlyDictionary<long, string> vatAccountsByParentTransactionNumber,
+        IReadOnlyDictionary<long, IReadOnlyList<BofExportRecord>> relatedSalesRecordsByParentTransactionNumber,
+        IReadOnlySet<BofExportRecord> duplicatePaymentRecords,
         string? token,
         List<BofImportWarning> warnings)
     {
-        if (IsVatRecord(record))
+        if (duplicatePaymentRecords.Contains(record))
+        {
+            return null;
+        }
+
+        if (IsRelatedSalesRecord(record))
         {
             return null;
         }
@@ -52,10 +59,8 @@ public sealed class BofToOaTransactionConverter
             return null;
         }
 
-        var currency = FirstValue(record.Currency, options.DefaultCurrency);
         var transactionComment = BuildTransactionComment(record);
-        var entryComment = BuildEntryComment(record, transactionComment);
-        var entries = CreateEntries(record, options, vatAccountsByParentTransactionNumber, amount.Value, currency, entryComment, warnings);
+        var entries = CreateEntries(record, options, relatedSalesRecordsByParentTransactionNumber, amount.Value, warnings);
         if (entries.Count == 0)
         {
             return null;
@@ -77,102 +82,99 @@ public sealed class BofToOaTransactionConverter
     private static List<OaTransactionEntryRequest> CreateEntries(
         BofExportRecord record,
         BofToOaMappingOptions options,
-        IReadOnlyDictionary<long, string> vatAccountsByParentTransactionNumber,
+        IReadOnlyDictionary<long, IReadOnlyList<BofExportRecord>> relatedSalesRecordsByParentTransactionNumber,
         decimal amount,
-        string? currency,
-        string? comment,
         List<BofImportWarning> warnings) =>
         record.Category switch
         {
-            BofTransactionCategory.Payment => CreatePaymentEntries(record, options, amount, currency, comment, warnings),
-            BofTransactionCategory.Charge or BofTransactionCategory.Package => CreateSalesEntries(record, options, vatAccountsByParentTransactionNumber, amount, currency, comment, warnings),
+            BofTransactionCategory.Payment => CreatePaymentEntries(record, options, amount, warnings),
+            BofTransactionCategory.Charge or BofTransactionCategory.Package => CreateSalesEntries(record, options, relatedSalesRecordsByParentTransactionNumber, amount, warnings),
             _ => CreateUnknownCategoryWarning(record, warnings)
         };
 
     private static List<OaTransactionEntryRequest> CreateSalesEntries(
         BofExportRecord record,
         BofToOaMappingOptions options,
-        IReadOnlyDictionary<long, string> vatAccountsByParentTransactionNumber,
+        IReadOnlyDictionary<long, IReadOnlyList<BofExportRecord>> relatedSalesRecordsByParentTransactionNumber,
         decimal amount,
-        string? currency,
-        string? comment,
         List<BofImportWarning> warnings)
     {
         var debtorAccount = ResolveDebtorAccount(record, options);
-        var revenueAccount = ResolveRevenueAccount(record, options);
-        if (string.IsNullOrWhiteSpace(debtorAccount) || string.IsNullOrWhiteSpace(revenueAccount))
+        if (string.IsNullOrWhiteSpace(debtorAccount))
         {
             warnings.Add(CreateWarning(
                 record,
-                $"Missing sales account mapping for category {record.Category}, transaction code '{record.TransactionCode}', subgroup '{record.TransactionSubGroup}'."));
+                $"Missing debtor account mapping for category {record.Category}, transaction code '{record.TransactionCode}', subgroup '{record.TransactionSubGroup}'."));
             return [];
         }
 
-        var grossAmount = RoundAmount(Math.Abs(amount));
-        var revenueAmount = ResolveRevenueAmount(record, grossAmount);
-        var vatAmount = RoundAmount(grossAmount - revenueAmount);
-        if (vatAmount < 0)
+        var debtorAmount = RoundAmount(Math.Abs(record.GrossAmount ?? amount));
+        var relatedRecords = GetRelatedSalesRecords(record, relatedSalesRecordsByParentTransactionNumber);
+        var isPositiveAmount = amount >= 0;
+        var entries = new List<OaTransactionEntryRequest>
         {
-            vatAmount = 0;
-            revenueAmount = grossAmount;
+            CreateEntry(
+                mainEntry: true,
+                account: debtorAccount,
+                debitAmount: isPositiveAmount ? debtorAmount : null,
+                creditAmount: isPositiveAmount ? null : debtorAmount,
+                sourceRecord: record,
+                options: options)
+        };
+
+        var creditEntries = new List<OaTransactionEntryRequest>();
+        var creditTotal = 0m;
+        var creditRows = new[] { record }.Concat(relatedRecords);
+        foreach (var creditRow in creditRows)
+        {
+            var creditAccount = ResolveSalesCreditAccount(creditRow, options);
+            if (string.IsNullOrWhiteSpace(creditAccount))
+            {
+                warnings.Add(CreateWarning(
+                    creditRow,
+                    $"Missing sales credit account mapping for transaction code '{creditRow.TransactionCode}', subgroup '{creditRow.TransactionSubGroup}'."));
+                return [];
+            }
+
+            var fallbackAmount = ReferenceEquals(record, creditRow) && relatedRecords.Count == 0
+                ? debtorAmount
+                : (decimal?)null;
+            var creditAmount = ResolveSalesCreditAmount(creditRow, fallbackAmount);
+            if (creditAmount is null || creditAmount == 0)
+            {
+                warnings.Add(CreateWarning(creditRow, "Sales credit row does not contain a non-zero net_amount."));
+                return [];
+            }
+
+            var absoluteCreditAmount = RoundAmount(Math.Abs(creditAmount.Value));
+            creditTotal += absoluteCreditAmount;
+            creditEntries.Add(CreateEntry(
+                mainEntry: false,
+                account: creditAccount,
+                debitAmount: isPositiveAmount ? null : absoluteCreditAmount,
+                creditAmount: isPositiveAmount ? absoluteCreditAmount : null,
+                sourceRecord: creditRow,
+                options: options,
+                fallbackCurrency: record.Currency));
         }
 
-        var vatAccount = ResolveVatAccount(record, options, vatAccountsByParentTransactionNumber);
-        if (vatAmount > 0 && string.IsNullOrWhiteSpace(vatAccount))
+        var difference = RoundAmount(debtorAmount - creditTotal);
+        if (difference != 0)
         {
-            warnings.Add(CreateWarning(record, "Missing VAT account mapping for sales transaction with VAT amount."));
+            warnings.Add(CreateWarning(
+                record,
+                $"Sales transaction chain is not balanced: gross amount {debtorAmount.ToString(CultureInfo.InvariantCulture)} does not match net_amount sum {creditTotal.ToString(CultureInfo.InvariantCulture)}."));
             return [];
         }
 
-        return amount >= 0
-            ?
-            [
-                CreateEntry(
-                    mainEntry: true,
-                    account: debtorAccount,
-                    debitAmount: grossAmount,
-                    creditAmount: null,
-                    currency: currency,
-                    options: options,
-                    comment: comment),
-                CreateEntry(
-                    mainEntry: false,
-                    account: revenueAccount,
-                    debitAmount: null,
-                    creditAmount: revenueAmount,
-                    currency: currency,
-                    options: options,
-                    comment: comment),
-                .. CreateVatEntries(vatAccount, debitAmount: null, creditAmount: vatAmount, currency, options, comment)
-            ]
-            :
-            [
-                CreateEntry(
-                    mainEntry: true,
-                    account: debtorAccount,
-                    debitAmount: null,
-                    creditAmount: grossAmount,
-                    currency: currency,
-                    options: options,
-                    comment: comment),
-                CreateEntry(
-                    mainEntry: false,
-                    account: revenueAccount,
-                    debitAmount: revenueAmount,
-                    creditAmount: null,
-                    currency: currency,
-                    options: options,
-                    comment: comment),
-                .. CreateVatEntries(vatAccount, debitAmount: vatAmount, creditAmount: null, currency, options, comment)
-            ];
+        entries.AddRange(creditEntries);
+        return entries;
     }
 
     private static List<OaTransactionEntryRequest> CreatePaymentEntries(
         BofExportRecord record,
         BofToOaMappingOptions options,
         decimal amount,
-        string? currency,
-        string? comment,
         List<BofImportWarning> warnings)
     {
         var paymentAccount = ResolvePaymentAccount(record, options);
@@ -194,17 +196,15 @@ public sealed class BofToOaTransactionConverter
                     account: paymentAccount,
                     debitAmount: absoluteAmount,
                     creditAmount: null,
-                    currency: currency,
-                    options: options,
-                    comment: comment),
+                    sourceRecord: record,
+                    options: options),
                 CreateEntry(
                     mainEntry: false,
                     account: debtorAccount,
                     debitAmount: null,
                     creditAmount: absoluteAmount,
-                    currency: currency,
-                    options: options,
-                    comment: comment)
+                    sourceRecord: record,
+                    options: options)
             ]
             :
             [
@@ -213,45 +213,16 @@ public sealed class BofToOaTransactionConverter
                     account: paymentAccount,
                     debitAmount: null,
                     creditAmount: absoluteAmount,
-                    currency: currency,
-                    options: options,
-                    comment: comment),
+                    sourceRecord: record,
+                    options: options),
                 CreateEntry(
                     mainEntry: false,
                     account: debtorAccount,
                     debitAmount: absoluteAmount,
                     creditAmount: null,
-                    currency: currency,
-                    options: options,
-                    comment: comment)
+                    sourceRecord: record,
+                    options: options)
             ];
-    }
-
-    private static List<OaTransactionEntryRequest> CreateVatEntries(
-        string? vatAccount,
-        decimal? debitAmount,
-        decimal? creditAmount,
-        string? currency,
-        BofToOaMappingOptions options,
-        string? comment)
-    {
-        var amount = debitAmount ?? creditAmount ?? 0m;
-        if (amount == 0 || string.IsNullOrWhiteSpace(vatAccount))
-        {
-            return [];
-        }
-
-        return
-        [
-            CreateEntry(
-                mainEntry: false,
-                account: vatAccount,
-                debitAmount: debitAmount,
-                creditAmount: creditAmount,
-                currency: currency,
-                options: options,
-                comment: comment)
-        ];
     }
 
     private static List<OaTransactionEntryRequest> CreateUnknownCategoryWarning(
@@ -267,20 +238,20 @@ public sealed class BofToOaTransactionConverter
         string account,
         decimal? debitAmount,
         decimal? creditAmount,
-        string? currency,
+        BofExportRecord sourceRecord,
         BofToOaMappingOptions options,
-        string? comment) =>
+        string? fallbackCurrency = null) =>
         new()
         {
             MainEntry = mainEntry,
             Account = account,
             DebitAmount = debitAmount,
             CreditAmount = creditAmount,
-            Currency = currency,
+            Currency = FirstValue(sourceRecord.Currency, fallbackCurrency, options.DefaultCurrency),
             CostCentre = options.DefaultCostCentre,
             CostUnit = options.DefaultCostUnit,
             CashFlow = options.CashFlow,
-            Comment = comment
+            Comment = BuildEntryComment(sourceRecord)
         };
 
     private static string? ResolveDebtorAccount(BofExportRecord record, BofToOaMappingOptions options) =>
@@ -322,32 +293,36 @@ public sealed class BofToOaTransactionConverter
             TryGetValue(options.RevenueAccountsByTransactionSubGroup, record.TransactionSubGroup),
             options.DefaultRevenueAccount);
 
-    private static string? ResolveVatAccount(
-        BofExportRecord record,
-        BofToOaMappingOptions options,
-        IReadOnlyDictionary<long, string> vatAccountsByParentTransactionNumber)
-    {
-        if (record.TransactionNumber is not null &&
-            vatAccountsByParentTransactionNumber.TryGetValue(record.TransactionNumber.Value, out var vatAccount))
-        {
-            return vatAccount;
-        }
+    private static string? ResolveSalesCreditAccount(BofExportRecord record, BofToOaMappingOptions options) =>
+        IsVatRecord(record)
+            ? FirstValue(ResolveCsvEntryAccount(record), options.DefaultVatAccount)
+            : ResolveRevenueAccount(record, options);
 
-        return FirstValue(options.DefaultVatAccount);
-    }
-
-    private static IReadOnlyDictionary<long, string> CreateVatAccountsByParentTransactionNumber(
+    private static IReadOnlyDictionary<long, IReadOnlyList<BofExportRecord>> CreateRelatedSalesRecordsByParentTransactionNumber(
         IReadOnlyCollection<BofExportRecord> records) =>
         records
-            .Where(record => IsVatRecord(record) && record.ParentTransactionNumber is not null)
-            .Select(record => new
-            {
-                ParentTransactionNumber = record.ParentTransactionNumber!.Value,
-                Account = ResolveCsvEntryAccount(record)
-            })
-            .Where(item => !string.IsNullOrWhiteSpace(item.Account))
-            .GroupBy(item => item.ParentTransactionNumber)
-            .ToDictionary(group => group.Key, group => group.First().Account!, EqualityComparer<long>.Default);
+            .Where(IsRelatedSalesRecord)
+            .GroupBy(record => record.ParentTransactionNumber!.Value)
+            .ToDictionary(
+                group => group.Key,
+                group => (IReadOnlyList<BofExportRecord>)group
+                    .OrderBy(record => record.SourceLineNumber)
+                    .ToArray(),
+                EqualityComparer<long>.Default);
+
+    private static IReadOnlyList<BofExportRecord> GetRelatedSalesRecords(
+        BofExportRecord record,
+        IReadOnlyDictionary<long, IReadOnlyList<BofExportRecord>> relatedSalesRecordsByParentTransactionNumber)
+    {
+        if (record.TransactionNumber is null)
+        {
+            return [];
+        }
+
+        return relatedSalesRecordsByParentTransactionNumber.TryGetValue(record.TransactionNumber.Value, out var records)
+            ? records
+            : [];
+    }
 
     private static string? ResolveCsvEntryAccount(BofExportRecord record) =>
         FirstValue(
@@ -359,21 +334,45 @@ public sealed class BofToOaTransactionConverter
             record.SourceAccountNumber,
             record.GroupAccountNumber);
 
-    private static decimal ResolveRevenueAmount(BofExportRecord record, decimal grossAmount)
-    {
-        if (record.NetAmount is not null and not 0)
-        {
-            return RoundAmount(Math.Abs(record.NetAmount.Value));
-        }
-
-        return grossAmount;
-    }
+    private static decimal? ResolveSalesCreditAmount(BofExportRecord record, decimal? fallbackAmount) =>
+        record.NetAmount is not null and not 0
+            ? record.NetAmount.Value
+            : fallbackAmount;
 
     private static bool IsVatRecord(BofExportRecord record) =>
         record.Category is BofTransactionCategory.Charge or BofTransactionCategory.Package &&
         (string.Equals(record.TransactionDescription, "VAT", StringComparison.OrdinalIgnoreCase) ||
             string.Equals(record.TransactionSubGroup, "R82", StringComparison.OrdinalIgnoreCase) ||
             string.Equals(record.RevenueIndicator, "X", StringComparison.OrdinalIgnoreCase));
+
+    private static bool IsRelatedSalesRecord(BofExportRecord record) =>
+        record.Category is BofTransactionCategory.Charge or BofTransactionCategory.Package &&
+        record.ParentTransactionNumber is not null;
+
+    private static IReadOnlySet<BofExportRecord> CreateDuplicatePaymentRecords(
+        IReadOnlyCollection<BofExportRecord> records) =>
+        records
+            .Where(IsPaymentRecordWithTransactionNumber)
+            .GroupBy(record => record.TransactionNumber!.Value)
+            .SelectMany(group => group
+                .OrderBy(GetPaymentScopePriority)
+                .ThenBy(record => record.SourceFilePath, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(record => record.SourceLineNumber)
+                .Skip(1))
+            .ToHashSet();
+
+    private static bool IsPaymentRecordWithTransactionNumber(BofExportRecord record) =>
+        record.Category == BofTransactionCategory.Payment &&
+        record.TransactionNumber is not null;
+
+    private static int GetPaymentScopePriority(BofExportRecord record) =>
+        record.Scope switch
+        {
+            BofExportScope.Daily => 0,
+            BofExportScope.CheckOut => 1,
+            BofExportScope.UntilToday => 2,
+            _ => 3
+        };
 
     private static decimal RoundAmount(decimal amount) =>
         Math.Round(amount, 2, MidpointRounding.AwayFromZero);
@@ -443,8 +442,9 @@ public sealed class BofToOaTransactionConverter
     private static string? BuildTransactionComment(BofExportRecord record) =>
         FirstValue(record.TransactionDescription, record.Remark, record.Reference);
 
-    private static string? BuildEntryComment(BofExportRecord record, string? transactionComment)
+    private static string? BuildEntryComment(BofExportRecord record)
     {
+        var transactionComment = BuildTransactionComment(record);
         var debtorName = FirstValue(record.PayeeName, record.GuestName);
 
         return (debtorName, transactionComment) switch
