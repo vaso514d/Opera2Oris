@@ -70,6 +70,16 @@ public sealed class BofExportRecord
 
     public long? FolioNumber => GetInt64(39);
 
+    public string? AccountNumber => GetString(19);
+
+    public string? PayeeName => GetString(20);
+
+    public string? NameType => GetString(21);
+
+    public long? NameId => GetInt64(22);
+
+    public string? GuestAccountNumber => GetString(23);
+
     public string? GuestName => GetString(24);
 
     public string? Room => GetString(33);

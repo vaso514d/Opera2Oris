@@ -44,9 +44,8 @@ public sealed class BofToOaTransactionConverter
             return null;
         }
 
-        var debitAccount = ResolveDebitAccount(record, options);
-        var creditAccount = ResolveCreditAccount(record, options);
-        if (string.IsNullOrWhiteSpace(debitAccount) || string.IsNullOrWhiteSpace(creditAccount))
+        var account = ResolveEntryAccount(record, options);
+        if (string.IsNullOrWhiteSpace(account))
         {
             warnings.Add(CreateWarning(
                 record,
@@ -55,13 +54,10 @@ public sealed class BofToOaTransactionConverter
         }
 
         var absoluteAmount = Math.Abs(amount.Value);
-        if (amount < 0)
-        {
-            (debitAccount, creditAccount) = (creditAccount, debitAccount);
-        }
-
         var currency = FirstValue(record.Currency, options.DefaultCurrency);
         var comment = BuildComment(record);
+        var debitAmount = amount > 0 ? absoluteAmount : 0m;
+        var creditAmount = amount < 0 ? absoluteAmount : 0m;
 
         return new OaTransactionRequest
         {
@@ -76,17 +72,9 @@ public sealed class BofToOaTransactionConverter
             [
                 CreateEntry(
                     mainEntry: true,
-                    account: debitAccount,
-                    debitAmount: absoluteAmount,
-                    creditAmount: null,
-                    currency: currency,
-                    options: options,
-                    comment: comment),
-                CreateEntry(
-                    mainEntry: false,
-                    account: creditAccount,
-                    debitAmount: null,
-                    creditAmount: absoluteAmount,
+                    account: account,
+                    debitAmount: debitAmount,
+                    creditAmount: creditAmount,
                     currency: currency,
                     options: options,
                     comment: comment)
@@ -150,25 +138,13 @@ public sealed class BofToOaTransactionConverter
         return record.GrossAmount ?? record.NetAmount;
     }
 
-    private static string? ResolveDebitAccount(BofExportRecord record, BofToOaMappingOptions options) =>
+    private static string? ResolveEntryAccount(BofExportRecord record, BofToOaMappingOptions options) =>
         record.Category switch
         {
             BofTransactionCategory.Payment => ResolvePaymentAccount(record, options),
             BofTransactionCategory.Package => FirstValue(options.PackageLedgerAccount, options.GuestLedgerAccount),
             _ => options.GuestLedgerAccount
         };
-
-    private static string? ResolveCreditAccount(BofExportRecord record, BofToOaMappingOptions options) =>
-        record.Category switch
-        {
-            BofTransactionCategory.Payment => options.GuestLedgerAccount,
-            _ => ResolveRevenueAccount(record, options)
-        };
-
-    private static string? ResolveRevenueAccount(BofExportRecord record, BofToOaMappingOptions options) =>
-        TryGetValue(options.RevenueAccountsByTransactionCode, record.TransactionCode) ??
-        TryGetValue(options.RevenueAccountsByTransactionSubGroup, record.TransactionSubGroup) ??
-        options.DefaultRevenueAccount;
 
     private static string? ResolvePaymentAccount(BofExportRecord record, BofToOaMappingOptions options) =>
         TryGetValue(options.PaymentAccountsByTransactionCode, record.TransactionCode) ??
@@ -195,8 +171,19 @@ public sealed class BofToOaTransactionConverter
         return string.Concat(options.DocumentNumberPrefix, record.TransactionNumber.Value.ToString(CultureInfo.InvariantCulture));
     }
 
-    private static string? BuildComment(BofExportRecord record) =>
-        FirstValue(record.TransactionDescription, record.Remark, record.Reference);
+    private static string? BuildComment(BofExportRecord record)
+    {
+        var debtorName = FirstValue(record.PayeeName, record.GuestName);
+        var csvComment = FirstValue(record.TransactionDescription, record.Remark, record.Reference);
+
+        return (debtorName, csvComment) switch
+        {
+            ({ Length: > 0 }, { Length: > 0 }) => $"{debtorName} - {csvComment}",
+            ({ Length: > 0 }, _) => debtorName,
+            (_, { Length: > 0 }) => csvComment,
+            _ => null
+        };
+    }
 
     private static string? FirstValue(params string?[] values) =>
         values.FirstOrDefault(value => !string.IsNullOrWhiteSpace(value))?.Trim();
