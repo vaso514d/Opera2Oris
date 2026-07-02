@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 3 | 9154 | SecurePay | TAKEYEVA",
+  "transactionDate": "2026-02-16T18:52:51",
+  "transactionDocumentNumber": "OP-104367146",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 70537.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 3 | 9154 | SecurePay | TAKEYEVA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 70537.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 3 | 9154 | SecurePay | TAKEYEVA"
+    }
+  ]
+}

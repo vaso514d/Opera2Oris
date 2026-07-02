@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 2 | 7980 | Pre Stay Charge | TAKEYEVA",
+  "transactionDate": "2026-02-16T18:52:32",
+  "transactionDocumentNumber": "OP-104367130",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 70537.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 2 | 7980 | Pre Stay Charge | TAKEYEVA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 70537.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 2 | 7980 | Pre Stay Charge | TAKEYEVA"
+    }
+  ]
+}

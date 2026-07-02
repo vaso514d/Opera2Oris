@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 8 | 9154 | SecurePay | KOMAROVA",
+  "transactionDate": "2026-02-16T18:00:33",
+  "transactionDocumentNumber": "OPERA-104358088",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 671602.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 8 | 9154 | SecurePay | KOMAROVA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 671602.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 8 | 9154 | SecurePay | KOMAROVA"
+    }
+  ]
+}

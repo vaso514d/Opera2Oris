@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 13 | 9154 | SecurePay | KOROLENYA",
+  "transactionDate": "2026-02-16T18:34:19",
+  "transactionDocumentNumber": "OP-104364186",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 395010,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 13 | 9154 | SecurePay | KOROLENYA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 395010,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 13 | 9154 | SecurePay | KOROLENYA"
+    }
+  ]
+}

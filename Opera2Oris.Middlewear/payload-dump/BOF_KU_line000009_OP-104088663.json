@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 9 | 9999 | Package Wrapper | AKHMETOVA | room 318 | [NA Pkg. Trx] 104088662",
+  "transactionDate": "2026-02-15T22:02:57",
+  "transactionDocumentNumber": "OP-104088663",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE60ZZ0000000000000102",
+      "debitAmount": 108300,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 9 | 9999 | Package Wrapper | AKHMETOVA | room 318 | [NA Pkg. Trx] 104088662"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 108300,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 9 | 9999 | Package Wrapper | AKHMETOVA | room 318 | [NA Pkg. Trx] 104088662"
+    }
+  ]
+}

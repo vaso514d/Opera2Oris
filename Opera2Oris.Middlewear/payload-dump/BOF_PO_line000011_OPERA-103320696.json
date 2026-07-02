@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 11 | 9000 | Cash | NAIDYONOVA | room 421",
+  "transactionDate": "2026-02-13T14:08:46",
+  "transactionDocumentNumber": "OPERA-103320696",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 50000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 11 | 9000 | Cash | NAIDYONOVA | room 421"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 50000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 11 | 9000 | Cash | NAIDYONOVA | room 421"
+    }
+  ]
+}

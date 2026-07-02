@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 18 | 9154 | SecurePay | KACHAN",
+  "transactionDate": "2026-02-16T17:56:10",
+  "transactionDocumentNumber": "OP-104357541",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 218595,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 18 | 9154 | SecurePay | KACHAN"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 218595,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 18 | 9154 | SecurePay | KACHAN"
+    }
+  ]
+}

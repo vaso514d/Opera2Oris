@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Package | Daily | BOF_KD.csv | line 7 | 9999 | Package Wrapper | SHTAUS | room 452 | [NA Pkg. Trx] 104395708",
+  "transactionDate": "2026-02-16T22:02:47",
+  "transactionDocumentNumber": "OP-104395709",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE60ZZ0000000000000102",
+      "debitAmount": 104167.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | Daily | BOF_KD.csv | line 7 | 9999 | Package Wrapper | SHTAUS | room 452 | [NA Pkg. Trx] 104395708"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 104167.5,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | Daily | BOF_KD.csv | line 7 | 9999 | Package Wrapper | SHTAUS | room 452 | [NA Pkg. Trx] 104395708"
+    }
+  ]
+}

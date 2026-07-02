@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 19 | 9153 | Kaspi Pay | DOSSETOVA",
+  "transactionDate": "2026-02-12T16:06:51",
+  "transactionDocumentNumber": "OPERA-102995934",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 138537,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 19 | 9153 | Kaspi Pay | DOSSETOVA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 138537,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 19 | 9153 | Kaspi Pay | DOSSETOVA"
+    }
+  ]
+}

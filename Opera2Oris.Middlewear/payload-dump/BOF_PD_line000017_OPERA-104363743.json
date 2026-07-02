@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 17 | 9154 | SecurePay | TURAROVA",
+  "transactionDate": "2026-02-16T18:30:11",
+  "transactionDocumentNumber": "OPERA-104363743",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 322400,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 17 | 9154 | SecurePay | TURAROVA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 322400,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 17 | 9154 | SecurePay | TURAROVA"
+    }
+  ]
+}

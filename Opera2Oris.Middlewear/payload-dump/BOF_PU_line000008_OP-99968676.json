@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 8 | 9035 | ALL Reward | BAZARBAYEVA | BWP18032710MBRZ",
+  "transactionDate": "2026-02-03T09:45:44",
+  "transactionDocumentNumber": "OP-99968676",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 23821.6,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 8 | 9035 | ALL Reward | BAZARBAYEVA | BWP18032710MBRZ"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 23821.6,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 8 | 9035 | ALL Reward | BAZARBAYEVA | BWP18032710MBRZ"
+    }
+  ]
+}

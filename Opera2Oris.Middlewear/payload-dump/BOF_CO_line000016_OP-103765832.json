@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 16 | 1000 | Accommodation | NAIDYONOVA | room 425 | [NA P.Room] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425",
+  "transactionDate": "2026-02-14T22:41:48",
+  "transactionDocumentNumber": "OP-103765832",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 146140,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 16 | 1000 | Accommodation | NAIDYONOVA | room 425 | [NA P.Room] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 146140,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 16 | 1000 | Accommodation | NAIDYONOVA | room 425 | [NA P.Room] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    }
+  ]
+}

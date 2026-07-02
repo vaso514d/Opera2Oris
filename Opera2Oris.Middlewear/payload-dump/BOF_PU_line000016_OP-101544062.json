@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 16 | 9035 | ALL Reward | GAM | BWP18195446KZAD",
+  "transactionDate": "2026-02-08T08:55:53",
+  "transactionDocumentNumber": "OP-101544062",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 46720.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 16 | 9035 | ALL Reward | GAM | BWP18195446KZAD"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 46720.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 16 | 9035 | ALL Reward | GAM | BWP18195446KZAD"
+    }
+  ]
+}

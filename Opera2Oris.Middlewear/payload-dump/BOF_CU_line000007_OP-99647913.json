@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 7 | 7999 | VAT | SAUTBEK | [Add: 16%Prices.(B)]",
+  "transactionDate": "2026-02-02T08:15:14",
+  "transactionDocumentNumber": "OP-99647913",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 52647.17,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 7 | 7999 | VAT | SAUTBEK | [Add: 16%Prices.(B)]"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 52647.17,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 7 | 7999 | VAT | SAUTBEK | [Add: 16%Prices.(B)]"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 12 | 7980 | Pre Stay Charge | TRENKENSHU",
+  "transactionDate": "2026-02-09T13:54:21",
+  "transactionDocumentNumber": "OPERA-101828986",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE33ZZ0000000000000200",
+      "debitAmount": 156047.1,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 12 | 7980 | Pre Stay Charge | TRENKENSHU"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 156047.1,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 12 | 7980 | Pre Stay Charge | TRENKENSHU"
+    }
+  ]
+}

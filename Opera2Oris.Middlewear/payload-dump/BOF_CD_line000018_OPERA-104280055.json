@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 18 | 7999 | VAT | ANUAROVA | room 516 | [Add: 16%Prices.(B)]",
+  "transactionDate": "2026-02-16T10:57:30",
+  "transactionDocumentNumber": "OPERA-104280055",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE33ZZ0000000000000200",
+      "debitAmount": 66.21,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 18 | 7999 | VAT | ANUAROVA | room 516 | [Add: 16%Prices.(B)]"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 66.21,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 18 | 7999 | VAT | ANUAROVA | room 516 | [Add: 16%Prices.(B)]"
+    }
+  ]
+}

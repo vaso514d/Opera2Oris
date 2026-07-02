@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 4 | 9151 | EPAY | SAUTBEK",
+  "transactionDate": "2026-02-02T08:15:31",
+  "transactionDocumentNumber": "OP-99647919",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 381692,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 4 | 9151 | EPAY | SAUTBEK"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 381692,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 4 | 9151 | EPAY | SAUTBEK"
+    }
+  ]
+}

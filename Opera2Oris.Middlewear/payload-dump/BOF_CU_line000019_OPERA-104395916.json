@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 19 | 1990 | PKG BKF - BG | ANUAROVA | room 516 | [NA Pkgs.BKF12000]  [Against Pkg.: BKF12000]",
+  "transactionDate": "2026-02-16T22:02:50",
+  "transactionDocumentNumber": "OPERA-104395916",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 19 | 1990 | PKG BKF - BG | ANUAROVA | room 516 | [NA Pkgs.BKF12000]  [Against Pkg.: BKF12000]"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 19 | 1990 | PKG BKF - BG | ANUAROVA | room 516 | [NA Pkgs.BKF12000]  [Against Pkg.: BKF12000]"
+    }
+  ]
+}

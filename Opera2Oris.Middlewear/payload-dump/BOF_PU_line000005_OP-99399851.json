@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 5 | 9035 | ALL Reward | SAUTBEK | BWP18332647FCJK",
+  "transactionDate": "2026-02-01T07:18:32",
+  "transactionDocumentNumber": "OP-99399851",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 24052.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 5 | 9035 | ALL Reward | SAUTBEK | BWP18332647FCJK"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 24052.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 5 | 9035 | ALL Reward | SAUTBEK | BWP18332647FCJK"
+    }
+  ]
+}

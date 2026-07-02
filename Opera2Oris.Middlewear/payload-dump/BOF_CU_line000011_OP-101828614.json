@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 11 | 7999 | VAT | TRENKENSHU | [Add: 16%Prices.(B)]",
+  "transactionDate": "2026-02-09T13:52:49",
+  "transactionDocumentNumber": "OP-101828614",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 21523.74,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 11 | 7999 | VAT | TRENKENSHU | [Add: 16%Prices.(B)]"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 21523.74,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 11 | 7999 | VAT | TRENKENSHU | [Add: 16%Prices.(B)]"
+    }
+  ]
+}

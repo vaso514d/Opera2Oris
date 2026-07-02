@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Package | CheckOut | BOF_KO.csv | line 19 | 9999 | Package Wrapper | NAIDYONOVA | room 421 | [NA Pkg. Trx] 104089264",
+  "transactionDate": "2026-02-15T22:03:04",
+  "transactionDocumentNumber": "OPERA-104089265",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE60ZZ0000000000000102",
+      "debitAmount": 172140,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | CheckOut | BOF_KO.csv | line 19 | 9999 | Package Wrapper | NAIDYONOVA | room 421 | [NA Pkg. Trx] 104089264"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 172140,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | CheckOut | BOF_KO.csv | line 19 | 9999 | Package Wrapper | NAIDYONOVA | room 421 | [NA Pkg. Trx] 104089264"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 11 | 9405 | Kaspi QR | KARIKBOLOVA",
+  "transactionDate": "2026-02-12T18:38:43",
+  "transactionDocumentNumber": "OP-103023684",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 289017,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 11 | 9405 | Kaspi QR | KARIKBOLOVA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 289017,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 11 | 9405 | Kaspi QR | KARIKBOLOVA"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 15 | 9154 | SecurePay | NAIDYONOVA | room 543",
+  "transactionDate": "2026-01-20T17:41:01",
+  "transactionDocumentNumber": "OP-95820765",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 539220,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 15 | 9154 | SecurePay | NAIDYONOVA | room 543"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 539220,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 15 | 9154 | SecurePay | NAIDYONOVA | room 543"
+    }
+  ]
+}

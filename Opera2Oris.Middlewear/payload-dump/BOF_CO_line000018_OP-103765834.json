@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 18 | 1990 | PKG BKF - BG | NAIDYONOVA | room 425 | [NA Pkgs.BKF12000]  [Against Pkg.: BKF12000] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425",
+  "transactionDate": "2026-02-14T22:41:48",
+  "transactionDocumentNumber": "OP-103765834",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 18 | 1990 | PKG BKF - BG | NAIDYONOVA | room 425 | [NA Pkgs.BKF12000]  [Against Pkg.: BKF12000] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 18 | 1990 | PKG BKF - BG | NAIDYONOVA | room 425 | [NA Pkgs.BKF12000]  [Against Pkg.: BKF12000] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    }
+  ]
+}

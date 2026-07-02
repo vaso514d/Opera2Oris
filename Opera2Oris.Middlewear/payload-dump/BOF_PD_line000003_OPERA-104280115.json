@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 3 | 9000 | Cash | ANUAROVA | room 516",
+  "transactionDate": "2026-02-16T10:55:28",
+  "transactionDocumentNumber": "OPERA-104280115",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 340000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 3 | 9000 | Cash | ANUAROVA | room 516"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 340000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 3 | 9000 | Cash | ANUAROVA | room 516"
+    }
+  ]
+}

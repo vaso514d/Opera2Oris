@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 18 | 9405 | Kaspi QR | KIZNER",
+  "transactionDate": "2026-02-14T18:38:33",
+  "transactionDocumentNumber": "OP-103721295",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 15000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 18 | 9405 | Kaspi QR | KIZNER"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 15000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 18 | 9405 | Kaspi QR | KIZNER"
+    }
+  ]
+}

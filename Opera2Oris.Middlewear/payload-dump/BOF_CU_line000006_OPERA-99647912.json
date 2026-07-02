@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 6 | 7980 | Pre Stay Charge | SAUTBEK",
+  "transactionDate": "2026-02-02T08:15:14",
+  "transactionDocumentNumber": "OPERA-99647912",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 381692,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 6 | 7980 | Pre Stay Charge | SAUTBEK"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 381692,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | UntilToday | BOF_CU.csv | line 6 | 7980 | Pre Stay Charge | SAUTBEK"
+    }
+  ]
+}

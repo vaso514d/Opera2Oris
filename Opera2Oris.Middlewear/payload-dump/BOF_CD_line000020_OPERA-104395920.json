@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 20 | 1991 | PKG Dinner - BG | ANUAROVA | room 516 | [NA Pkgs.DIN12000]  [Against Pkg.: DIN12000]",
+  "transactionDate": "2026-02-16T22:02:50",
+  "transactionDocumentNumber": "OPERA-104395920",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 20 | 1991 | PKG Dinner - BG | ANUAROVA | room 516 | [NA Pkgs.DIN12000]  [Against Pkg.: DIN12000]"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 20 | 1991 | PKG Dinner - BG | ANUAROVA | room 516 | [NA Pkgs.DIN12000]  [Against Pkg.: DIN12000]"
+    }
+  ]
+}

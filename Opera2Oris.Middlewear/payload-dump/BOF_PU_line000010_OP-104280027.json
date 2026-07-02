@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 10 | 9405 | Kaspi QR | ANUAROVA | room 516",
+  "transactionDate": "2026-02-16T10:56:51",
+  "transactionDocumentNumber": "OP-104280027",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 480,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 10 | 9405 | Kaspi QR | ANUAROVA | room 516"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 480,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 10 | 9405 | Kaspi QR | ANUAROVA | room 516"
+    }
+  ]
+}

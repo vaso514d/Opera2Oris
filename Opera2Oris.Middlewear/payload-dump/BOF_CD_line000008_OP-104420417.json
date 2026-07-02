@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 8 | 7980 | Pre Stay Charge | ANUAROVA | room 516 | -340,000.00 Split into -169,760.00 and -170,240.00.",
+  "transactionDate": "2026-02-16T10:56:31",
+  "transactionDocumentNumber": "OP-104420417",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE33ZZ0000000000000200",
+      "debitAmount": 169760,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 8 | 7980 | Pre Stay Charge | ANUAROVA | room 516 | -340,000.00 Split into -169,760.00 and -170,240.00."
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 169760,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | Daily | BOF_CD.csv | line 8 | 7980 | Pre Stay Charge | ANUAROVA | room 516 | -340,000.00 Split into -169,760.00 and -170,240.00."
+    }
+  ]
+}

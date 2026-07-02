@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 10 | 9000 | Cash | NAIDYONOVA | room 421 | http://consumer.oofd.kz?i=1307179812\u0026f=010102222348\u0026s=50000.00\u0026t=20260213T190900",
+  "transactionDate": "2026-02-16T07:02:54",
+  "transactionDocumentNumber": "OPERA-104250844",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 50000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 10 | 9000 | Cash | NAIDYONOVA | room 421 | http://consumer.oofd.kz?i=1307179812\u0026f=010102222348\u0026s=50000.00\u0026t=20260213T190900"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE49ZZ0000000000000300",
+      "creditAmount": 50000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 10 | 9000 | Cash | NAIDYONOVA | room 421 | http://consumer.oofd.kz?i=1307179812\u0026f=010102222348\u0026s=50000.00\u0026t=20260213T190900"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 7 | 9035 | ALL Reward | TRENKENSHU | BWP18287198EKBA",
+  "transactionDate": "2026-02-08T09:03:23",
+  "transactionDocumentNumber": "OPERA-101545124",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 23360.4,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 7 | 9035 | ALL Reward | TRENKENSHU | BWP18287198EKBA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 23360.4,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 7 | 9035 | ALL Reward | TRENKENSHU | BWP18287198EKBA"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="docs/Opera2Oris_Integration_ka-GE_v0.1.md" />
+  </Folder>
+  <Project Path="Opera2Oris.ApiClient/Opera2Oris.ApiClient.csproj" />
+  <Project Path="Opera2Oris.Domain/Opera2Oris.Domain.csproj" />
+  <Project Path="Opera2Oris.Entities/Opera2Oris.Entities.csproj" />
+  <Project Path="Opera2Oris.Middlewear/Opera2Oris.Middlewear.csproj" />
+</Solution>

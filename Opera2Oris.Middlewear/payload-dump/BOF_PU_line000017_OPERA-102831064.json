@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 17 | 9154 | SecurePay | KULKHAN",
+  "transactionDate": "2026-02-12T08:17:19",
+  "transactionDocumentNumber": "OPERA-102831064",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 552330,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 17 | 9154 | SecurePay | KULKHAN"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 552330,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 17 | 9154 | SecurePay | KULKHAN"
+    }
+  ]
+}

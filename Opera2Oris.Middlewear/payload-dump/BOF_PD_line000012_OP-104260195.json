@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 12 | 9100 | Visa Card | POPOV | room 511",
+  "transactionDate": "2026-02-16T08:43:01",
+  "transactionDocumentNumber": "OP-104260195",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 44498,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 12 | 9100 | Visa Card | POPOV | room 511"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 44498,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 12 | 9100 | Visa Card | POPOV | room 511"
+    }
+  ]
+}

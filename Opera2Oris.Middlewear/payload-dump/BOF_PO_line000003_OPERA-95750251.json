@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 3 | 9035 | ALL Reward | KADOMETS | BWP18174292MRGF",
+  "transactionDate": "2026-01-20T11:16:16",
+  "transactionDocumentNumber": "OPERA-95750251",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 165813.2,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 3 | 9035 | ALL Reward | KADOMETS | BWP18174292MRGF"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 165813.2,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 3 | 9035 | ALL Reward | KADOMETS | BWP18174292MRGF"
+    }
+  ]
+}

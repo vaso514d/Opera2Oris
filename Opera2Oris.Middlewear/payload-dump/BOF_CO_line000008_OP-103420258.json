@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 8 | 1991 | PKG Dinner - BG | NAIDYONOVA | room 425 | [NA Pkgs.DIN12000]  [Against Pkg.: DIN12000] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425",
+  "transactionDate": "2026-02-13T22:15:15",
+  "transactionDocumentNumber": "OP-103420258",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE87ZZ0000000000000101",
+      "debitAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 8 | 1991 | PKG Dinner - BG | NAIDYONOVA | room 425 | [NA Pkgs.DIN12000]  [Against Pkg.: DIN12000] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 24000,
+      "currency": "KZT",
+      "comment": "Opera BOF | Charge | CheckOut | BOF_CO.csv | line 8 | 1991 | PKG Dinner - BG | NAIDYONOVA | room 425 | [NA Pkgs.DIN12000]  [Against Pkg.: DIN12000] Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    }
+  ]
+}

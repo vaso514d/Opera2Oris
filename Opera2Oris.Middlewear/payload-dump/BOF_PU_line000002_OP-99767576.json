@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 2 | 9035 | ALL Reward | ZHAKIPBEKOV | BWP18239424SJFT",
+  "transactionDate": "2026-02-02T19:32:17",
+  "transactionDocumentNumber": "OP-99767576",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 71464.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 2 | 9035 | ALL Reward | ZHAKIPBEKOV | BWP18239424SJFT"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 71464.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 2 | 9035 | ALL Reward | ZHAKIPBEKOV | BWP18239424SJFT"
+    }
+  ]
+}

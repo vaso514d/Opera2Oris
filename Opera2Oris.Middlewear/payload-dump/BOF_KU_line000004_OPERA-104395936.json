@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 4 | 9999 | Package Wrapper | ANUAROVA | room 518 | [NA Pkg. Trx]",
+  "transactionDate": "2026-02-16T22:02:50",
+  "transactionDocumentNumber": "OPERA-104395936",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE60ZZ0000000000000102",
+      "debitAmount": 170240,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 4 | 9999 | Package Wrapper | ANUAROVA | room 518 | [NA Pkg. Trx]"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 170240,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 4 | 9999 | Package Wrapper | ANUAROVA | room 518 | [NA Pkg. Trx]"
+    }
+  ]
+}

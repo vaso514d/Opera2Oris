@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 15 | 9999 | Package Wrapper | BEXULTAN | room 411 | [NA Pkg. Trx] 104395282",
+  "transactionDate": "2026-02-16T22:02:43",
+  "transactionDocumentNumber": "OPERA-104395283",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE60ZZ0000000000000102",
+      "debitAmount": 105640,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 15 | 9999 | Package Wrapper | BEXULTAN | room 411 | [NA Pkg. Trx] 104395282"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 105640,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | UntilToday | BOF_KU.csv | line 15 | 9999 | Package Wrapper | BEXULTAN | room 411 | [NA Pkg. Trx] 104395282"
+    }
+  ]
+}

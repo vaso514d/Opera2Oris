@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Package | CheckOut | BOF_KO.csv | line 11 | 9999 | Package Wrapper | NAIDYONOVA | room 425 | [NA Pkg. Trx] 104088704 Kadomets Tatyana #322=\u003ENaidyonova Oxana #425",
+  "transactionDate": "2026-02-15T22:02:58",
+  "transactionDocumentNumber": "OP-104088705",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE60ZZ0000000000000102",
+      "debitAmount": 213940,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | CheckOut | BOF_KO.csv | line 11 | 9999 | Package Wrapper | NAIDYONOVA | room 425 | [NA Pkg. Trx] 104088704 Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE33ZZ0000000000000200",
+      "creditAmount": 213940,
+      "currency": "KZT",
+      "comment": "Opera BOF | Package | CheckOut | BOF_KO.csv | line 11 | 9999 | Package Wrapper | NAIDYONOVA | room 425 | [NA Pkg. Trx] 104088704 Kadomets Tatyana #322=\u003ENaidyonova Oxana #425"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 6 | 9100 | Visa Card | USSOLTSEVA",
+  "transactionDate": "2026-02-16T18:51:46",
+  "transactionDocumentNumber": "OP-104366878",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 202920,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 6 | 9100 | Visa Card | USSOLTSEVA"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 202920,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 6 | 9100 | Visa Card | USSOLTSEVA"
+    }
+  ]
+}

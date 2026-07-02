@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 19 | 9004 | Deposit Transfered | UTEMISSOVA | room 428 | BWP18370609ZXDG",
+  "transactionDate": "2026-02-15T11:34:20",
+  "transactionDocumentNumber": "OP-103997622",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 23440.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 19 | 9004 | Deposit Transfered | UTEMISSOVA | room 428 | BWP18370609ZXDG"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 23440.8,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | CheckOut | BOF_PO.csv | line 19 | 9004 | Deposit Transfered | UTEMISSOVA | room 428 | BWP18370609ZXDG"
+    }
+  ]
+}

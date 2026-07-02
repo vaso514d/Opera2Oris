@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 16 | 9405 | Kaspi QR | MUN | room 414",
+  "transactionDate": "2026-02-16T18:53:52",
+  "transactionDocumentNumber": "OPERA-104367510",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 173280,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 16 | 9405 | Kaspi QR | MUN | room 414"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 173280,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | Daily | BOF_PD.csv | line 16 | 9405 | Kaspi QR | MUN | room 414"
+    }
+  ]
+}

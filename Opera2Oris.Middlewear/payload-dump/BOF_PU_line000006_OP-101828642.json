@@ -1,0 +1,22 @@
+{
+  "transactionComment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 6 | 9154 | SecurePay | TRENKENSHU",
+  "transactionDate": "2026-02-09T13:53:17",
+  "transactionDocumentNumber": "OP-101828642",
+  "correctDisbalance": false,
+  "transactionEntries": [
+    {
+      "mainEntry": true,
+      "account": "GE49ZZ0000000000000300",
+      "debitAmount": 156047.1,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 6 | 9154 | SecurePay | TRENKENSHU"
+    },
+    {
+      "mainEntry": false,
+      "account": "GE87ZZ0000000000000101",
+      "creditAmount": 156047.1,
+      "currency": "KZT",
+      "comment": "Opera BOF | Payment | UntilToday | BOF_PU.csv | line 6 | 9154 | SecurePay | TRENKENSHU"
+    }
+  ]
+}
