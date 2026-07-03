@@ -5,6 +5,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.0.0" />
     <ProjectReference Include="..\Opera2Oris.Domain\Opera2Oris.Domain.csproj" />
     <ProjectReference Include="..\Opera2Oris.ApiClient\Opera2Oris.ApiClient.csproj" />
+    <ProjectReference Include="..\Opera2Oris.Licensing\Opera2Oris.Licensing.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +19,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>

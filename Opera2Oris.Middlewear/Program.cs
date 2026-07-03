@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.WindowsServices;
+using Opera2Oris.Licensing;
 using Opera2Oris.Middlewear;
 
 ProcessLogger? logger = null;
@@ -18,6 +19,8 @@ try
     var settings = MiddlewearSettings.Load(configPath);
     logger = new ProcessLogger(settings.Logging);
     logger.Info($"Configuration loaded: {configPath}");
+
+    ValidateLicense(configPath, logger);
 
     if (!(commandLine.WatchEnabledOverride ?? settings.Watch.Enabled))
     {
@@ -131,6 +134,38 @@ static async Task RunWatchHostAsync(MiddlewearSettings settings, ProcessLogger l
         .Build();
 
     await host.RunAsync().ConfigureAwait(false);
+}
+
+static void ValidateLicense(string configPath, ProcessLogger logger)
+{
+    var configDir = Path.GetDirectoryName(Path.GetFullPath(configPath)) ?? AppContext.BaseDirectory;
+    var licensePath = Path.Combine(configDir, "license.key");
+
+    if (!File.Exists(licensePath))
+    {
+        licensePath = Path.Combine(AppContext.BaseDirectory, "license.key");
+    }
+
+    if (!File.Exists(licensePath))
+    {
+        logger.Error("License file not found. Place license.key next to appsettings.json or the executable.");
+        throw new InvalidOperationException("License file not found.");
+    }
+
+    var licenseKey = File.ReadAllText(licensePath).Trim();
+    if (string.IsNullOrWhiteSpace(licenseKey))
+    {
+        logger.Error("License file is empty.");
+        throw new InvalidOperationException("License file is empty.");
+    }
+
+    if (!LicenseValidator.Validate(licenseKey, LicenseKeys.PublicKey))
+    {
+        logger.Error("License is invalid. This license does not match the current machine hardware.");
+        throw new InvalidOperationException("Invalid license.");
+    }
+
+    logger.Info("License validated successfully.");
 }
 
 static async Task DelayBeforeInitialScanAsync(
