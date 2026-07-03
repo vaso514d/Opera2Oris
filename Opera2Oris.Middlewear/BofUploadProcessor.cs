@@ -252,14 +252,21 @@ internal sealed class BofUploadProcessor
             HttpRequestException => true,
             TimeoutException => true,
             TaskCanceledException => true,
-            OaApiException apiException when IsRetryableStatus(apiException.StatusCode) => true,
+            OaApiException apiException when IsConnectivityStatus(apiException.StatusCode) => true,
             _ => false
         };
 
     private static bool IsRetryableStatus(HttpStatusCode statusCode) =>
-        statusCode is HttpStatusCode.RequestTimeout or
+        statusCode is HttpStatusCode.BadRequest or
+            HttpStatusCode.RequestTimeout or
             HttpStatusCode.TooManyRequests or
             HttpStatusCode.InternalServerError or
+            HttpStatusCode.BadGateway or
+            HttpStatusCode.ServiceUnavailable or
+            HttpStatusCode.GatewayTimeout;
+
+    private static bool IsConnectivityStatus(HttpStatusCode statusCode) =>
+        statusCode is HttpStatusCode.RequestTimeout or
             HttpStatusCode.BadGateway or
             HttpStatusCode.ServiceUnavailable or
             HttpStatusCode.GatewayTimeout;

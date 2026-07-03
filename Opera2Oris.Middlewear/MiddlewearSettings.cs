@@ -228,8 +228,6 @@ internal sealed class OaMappingSettings
 
     public string? DefaultRevenueAccount { get; set; }
 
-    public string? DefaultVatAccount { get; set; }
-
     public string? DefaultPaymentAccount { get; set; }
 
     public string? DefaultCurrency { get; set; } = "GEL";
@@ -254,13 +252,14 @@ internal sealed class OaMappingSettings
 
     public Dictionary<string, string> PaymentAccountsByMethod { get; set; } = new(StringComparer.OrdinalIgnoreCase);
 
+    public List<TransactionRuleSettings> TransactionRules { get; set; } = [];
+
     public BofToOaMappingOptions ToOptions() =>
         new()
         {
             GuestLedgerAccount = EmptyToNull(GuestLedgerAccount),
             PackageLedgerAccount = EmptyToNull(PackageLedgerAccount),
             DefaultRevenueAccount = EmptyToNull(DefaultRevenueAccount),
-            DefaultVatAccount = EmptyToNull(DefaultVatAccount),
             DefaultPaymentAccount = EmptyToNull(DefaultPaymentAccount),
             DefaultCurrency = EmptyToNull(DefaultCurrency),
             DefaultCostCentre = EmptyToNull(DefaultCostCentre),
@@ -272,7 +271,8 @@ internal sealed class OaMappingSettings
             RevenueAccountsByTransactionCode = CleanMap(RevenueAccountsByTransactionCode),
             RevenueAccountsByTransactionSubGroup = CleanMap(RevenueAccountsByTransactionSubGroup),
             PaymentAccountsByTransactionCode = CleanMap(PaymentAccountsByTransactionCode),
-            PaymentAccountsByMethod = CleanMap(PaymentAccountsByMethod)
+            PaymentAccountsByMethod = CleanMap(PaymentAccountsByMethod),
+            TransactionRules = TransactionRules.Select(rule => rule.ToRule()).ToArray()
         };
 
     private static IReadOnlyDictionary<string, string> CleanMap(Dictionary<string, string> map) =>
@@ -281,4 +281,30 @@ internal sealed class OaMappingSettings
             .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase);
 
     private static string? EmptyToNull(string? value) => string.IsNullOrWhiteSpace(value) ? null : value;
+}
+
+internal sealed class TransactionRuleSettings
+{
+    public string? Account { get; set; }
+
+    public List<string> TransactionCodes { get; set; } = [];
+
+    public List<string> TransactionSubGroups { get; set; } = [];
+
+    public List<string> DescriptionKeywords { get; set; } = [];
+
+    public List<string> RevenueIndicators { get; set; } = [];
+
+    public BofTransactionRule ToRule() =>
+        new()
+        {
+            Account = string.IsNullOrWhiteSpace(Account) ? null : Account,
+            TransactionCodes = CleanList(TransactionCodes),
+            TransactionSubGroups = CleanList(TransactionSubGroups),
+            DescriptionKeywords = CleanList(DescriptionKeywords),
+            RevenueIndicators = CleanList(RevenueIndicators)
+        };
+
+    private static IReadOnlyList<string> CleanList(List<string> list) =>
+        list.Where(value => !string.IsNullOrWhiteSpace(value)).ToArray();
 }

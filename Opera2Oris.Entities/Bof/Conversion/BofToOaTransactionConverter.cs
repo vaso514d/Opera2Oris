@@ -293,10 +293,16 @@ public sealed class BofToOaTransactionConverter
             TryGetValue(options.RevenueAccountsByTransactionSubGroup, record.TransactionSubGroup),
             options.DefaultRevenueAccount);
 
-    private static string? ResolveSalesCreditAccount(BofExportRecord record, BofToOaMappingOptions options) =>
-        IsVatRecord(record)
-            ? FirstValue(ResolveCsvEntryAccount(record), options.DefaultVatAccount)
-            : ResolveRevenueAccount(record, options);
+    private static string? ResolveSalesCreditAccount(BofExportRecord record, BofToOaMappingOptions options)
+    {
+        var rule = FindMatchingTransactionRule(record, options);
+        if (rule is not null)
+        {
+            return FirstValue(ResolveCsvEntryAccount(record), rule.Account, options.DefaultRevenueAccount);
+        }
+
+        return ResolveRevenueAccount(record, options);
+    }
 
     private static IReadOnlyDictionary<long, IReadOnlyList<BofExportRecord>> CreateRelatedSalesRecordsByParentTransactionNumber(
         IReadOnlyCollection<BofExportRecord> records) =>
@@ -339,11 +345,8 @@ public sealed class BofToOaTransactionConverter
             ? record.NetAmount.Value
             : fallbackAmount;
 
-    private static bool IsVatRecord(BofExportRecord record) =>
-        record.Category is BofTransactionCategory.Charge or BofTransactionCategory.Package &&
-        (string.Equals(record.TransactionDescription, "VAT", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(record.TransactionSubGroup, "R82", StringComparison.OrdinalIgnoreCase) ||
-            string.Equals(record.RevenueIndicator, "X", StringComparison.OrdinalIgnoreCase));
+    private static BofTransactionRule? FindMatchingTransactionRule(BofExportRecord record, BofToOaMappingOptions options) =>
+        options.TransactionRules.FirstOrDefault(rule => rule.Matches(record));
 
     private static bool IsRelatedSalesRecord(BofExportRecord record) =>
         record.Category is BofTransactionCategory.Charge or BofTransactionCategory.Package &&

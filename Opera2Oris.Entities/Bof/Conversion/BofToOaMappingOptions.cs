@@ -8,8 +8,6 @@ public sealed class BofToOaMappingOptions
 
     public string? DefaultRevenueAccount { get; init; }
 
-    public string? DefaultVatAccount { get; init; }
-
     public string? DefaultPaymentAccount { get; init; }
 
     public string? DefaultCurrency { get; init; } = "GEL";
@@ -37,4 +35,6 @@ public sealed class BofToOaMappingOptions
 
     public IReadOnlyDictionary<string, string> PaymentAccountsByMethod { get; init; } =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    public IReadOnlyList<BofTransactionRule> TransactionRules { get; init; } = [];
 }
